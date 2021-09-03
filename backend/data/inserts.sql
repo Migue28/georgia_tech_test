@@ -1,21 +1,21 @@
 CREATE TABLE IF NOT EXISTS Partners
 (
-    partner_code REAL PRIMARY KEY, 
+    partner_code INTEGER PRIMARY KEY, 
     partner_name VARCHAR
 );
 
-CREATE TABLE Products
+CREATE TABLE IF NOT EXISTS Products
 (
-    product_code REAL PRIMARY KEY, 
+    product_code INTEGER PRIMARY KEY, 
     product_name VARCHAR
 );
 
-CREATE TABLE Imports
+CREATE TABLE IF NOT EXISTS Imports
 (
-    import_value REAL,
-    partner_code REAL,
-    product_code REAL,
-    import_year REAL,   
+    import_value INTEGER,
+    partner_code INTEGER,
+    product_code INTEGER,
+    import_year INTEGER,   
     FOREIGN KEY(partner_code)
     REFERENCES Partners(partner_code),
     FOREIGN KEY(product_code)
@@ -25,13 +25,19 @@ CREATE TABLE Imports
 
 CREATE TABLE temporal
 (
-    import_year REAL,
-    partner_code REAL,
+    import_year INTEGER,
+    partner_code INTEGER,
     partner_name VARCHAR,
-    product_code REAL,
+    product_code INTEGER,
     product_name VARCHAR,
-    import_value REAL
+    import_value INTEGER
 );
+
+INSERT INTO Partners(partner_code, partner_name)
+SELECT partner_code, partner_name
+FROM temporal 
+GROUP BY partner_code, partner_name
+ORDER BY partner_name;
 
 INSERT INTO Products(product_code, product_name)
 SELECT product_code, product_name
