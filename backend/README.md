@@ -24,5 +24,5 @@ To manage dependencies I use Poetry, so you will need it to install it.
     ## Install dependencies
     poetry install
     ## Run FastAPI
-    poetry run uvicorn app.main --reload
+    poetry run uvicorn app:main --reload
 ```
